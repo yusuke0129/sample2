@@ -41,4 +41,4 @@ jobs:
         working-directory: ./
     steps:
       - uses: actions/checkout@v2
-      - run: docker-compose run --rm app bundle exec rspec
+      - run: docker-compose run --rm app bundle exec rubcop
