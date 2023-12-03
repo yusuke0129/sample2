@@ -11,12 +11,9 @@ services:
     ports:
       - 5432:5432
 
-  back:
+  app:
     container_name: sample_back
-    build: ./back
-    volumes:
-      - ./back:/app
-      - bundle:/usr/local/bundle
+    build: .
     environment:
       - "DB_HOSTNAME=db"
       - "DB_USERNAME=postgres"
