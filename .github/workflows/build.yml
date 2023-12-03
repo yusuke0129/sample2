@@ -16,3 +16,17 @@ jobs:
         continue-on-error: true
 
       - run: docker-compose -f docker-compose.yml up -d
+
+      - run: docker-compose -f docker-compose.yml \
+          --entrypoint='' \
+          app bundle install
+
+      - run:
+          docker-compose -f docker-compose.ci.yml run \
+          --entrypoint='' \
+          app rails db:create RAILS_ENV=test
+      
+      -  run: |
+          docker-compose -f docker-compose.ci.yml run \
+          --entrypoint='' \
+          app rails db:migrate RAILS_ENV=test
