@@ -131,7 +131,7 @@ export default {
     async search($axios) {
       let query = "?" + "date=" + this.date
       this.loading = true
-      let res = await this.$axios.$get(`http://54.238.36.167:3000/contacts${query}`)
+      let res = await this.$axios.$get(`http://localhost:3000/contacts${query}`)
       this.contacts = res.data
       this.loading = false
     },

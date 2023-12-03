@@ -26,7 +26,7 @@
           </p>
           <p>
             アプリのバックジョブ管理にはSidekiqを導入しており、<a
-              href="http://54.238.36.167:3000/sidekiq/"
+              href="http://localhost:3000/sidekiq/"
               target="_blank"
             >
               ダッシュボード </a>よりJobの実行を確認できます

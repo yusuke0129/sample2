@@ -66,9 +66,9 @@ Rails.application.configure do
 
   Rails.application.config.hosts << 'back'
 
-  config.session_store :redis_store, servers: 'redis://54.238.36.167:6379/0', expire_in: 1.day
+  config.session_store :redis_store, servers: 'redis://localhost:6379/0', expire_in: 1.day
 
   config.active_job.queue_adapter = :sidekiq
 
-  config.action_mailer.default_url_options = { host: '54.238.36.167', port: 3000, protocol: 'http' }
+  config.action_mailer.default_url_options = { host: 'localhost', port: 3000, protocol: 'http' }
 end

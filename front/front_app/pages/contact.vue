@@ -61,7 +61,7 @@ export default {
         "&context=" +
         this.context
       const res = await this.$axios.$post(
-        `http://54.238.36.167:3000/contacts${query}`
+        `http://localhost:3000/contacts${query}`
       )
       const errors = res.errors
       if (errors) {

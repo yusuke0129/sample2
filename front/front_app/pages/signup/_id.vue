@@ -56,7 +56,7 @@ export default {
     if(store.state.name){ return }
     if(params.id === 'undefined'){
       alert('セッションタイムアウト\n再ログインが必要です。')
-      location.href = 'http://54.238.36.167'
+      location.href = 'http://localhost'
       return
     }
     let res = await $axios.$get(`http://back:3000/users/${params.id}`)

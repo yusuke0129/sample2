@@ -77,10 +77,10 @@ export default {
         this.email +
         "&password=" +
         this.password +
-        "&confirm_success_url=http://54.238.36.167/"
+        "&confirm_success_url=http://localhost/"
       this.loading = true
       try {
-        await this.$axios.$post(`http://54.238.36.167:3000/api/auth${query}`)
+        await this.$axios.$post(`http://localhost:3000/api/auth${query}`)
       } catch (e) {
         alert("入力内容が不正です。\n登録に失敗しました")
         return

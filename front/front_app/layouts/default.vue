@@ -167,7 +167,7 @@ export default {
       let query = "?" + "email=" + this.email + "&password=" + this.password
       try {
         const res = await this.$axios.$post(
-          `http://54.238.36.167:3000/api/auth/sign_in${query}`
+          `http://localhost:3000/api/auth/sign_in${query}`
         )
 
         $cookies.set("auth", true, $cookiesOpt)
