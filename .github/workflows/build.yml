@@ -17,7 +17,7 @@ jobs:
 
       - run: docker-compose -f docker-compose.yml up -d
 
-      - run: docker-compose --rm app bundle install
+      - run: docker-compose run --rm console bash -c "bundle install && rails db:prepare && rails db:seed"
 
       - run: docker-compose -f docker-compose.ci.yml run --rm app rails db:create RAILS_ENV=test
       
