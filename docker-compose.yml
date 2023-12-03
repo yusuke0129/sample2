@@ -12,7 +12,6 @@ services:
       - 5432:5432
 
   app:
-    container_name: sample_back
     build: .
     environment:
       - "DB_HOSTNAME=db"
