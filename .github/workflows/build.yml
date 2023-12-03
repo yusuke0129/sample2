@@ -26,7 +26,9 @@ jobs:
       run:
         working-directory: ./
     steps:
-      - run: docker-compose -f docker-compose.yml run --rm app rails db:create RAILS_ENV=test
+      - uses: actions/checkout@v2
+
+      - run: docker-compose run --rm app rails db:create RAILS_ENV=test
 
       - run: docker-compose run --rm app rails db:migrate RAILS_ENV=test
       - run: docker-compose run --rm app bundle exec rspec
