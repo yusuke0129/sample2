@@ -30,7 +30,3 @@ services:
     command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
     tty: true
     stdin_open: true
-
-volumes:
-  bundle:
-    external: true
