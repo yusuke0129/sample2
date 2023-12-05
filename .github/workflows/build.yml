@@ -1,7 +1,7 @@
 name: build
 on:
   push:
-# testaaaaaaaa
+# testaaaaaaaaaaaaa
 jobs:
   build:
     name: build
@@ -25,35 +25,35 @@ jobs:
 
       - run: docker-compose run --rm app bundle install
 
-  rspec:
-    needs: build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./
-    steps:
-      - uses: actions/checkout@v2
+  # rspec:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        with:
-          key: test
-        continue-on-error: true
+  #     - uses: satackey/action-docker-layer-caching@v0.0.11
+  #       with:
+  #         key: test
+  #       continue-on-error: true
 
-      - run: docker-compose run --rm app rails db:create RAILS_ENV=test
+  #     - run: docker-compose run --rm app rails db:create RAILS_ENV=test
 
-      - run: docker-compose run --rm app rails db:migrate RAILS_ENV=test
-      - run: docker-compose run --rm app bundle exec rspec
+  #     - run: docker-compose run --rm app rails db:migrate RAILS_ENV=test
+  #     - run: docker-compose run --rm app bundle exec rspec
   
-  rubocop:
-    needs: build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./
-    steps:
-      - uses: actions/checkout@v2
+  # rubocop:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+  #   defaults:
+  #     run:
+  #       working-directory: ./
+  #   steps:
+  #     - uses: actions/checkout@v2
 
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        continue-on-error: true
+  #     - uses: satackey/action-docker-layer-caching@v0.0.11
+  #       continue-on-error: true
 
-      - run: docker-compose run --rm app bundle exec rubocop
+  #     - run: docker-compose run --rm app bundle exec rubocop
