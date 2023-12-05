@@ -28,6 +28,9 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
       - run: docker-compose run --rm app rails db:create RAILS_ENV=test
 
       - run: docker-compose run --rm app rails db:migrate RAILS_ENV=test
@@ -41,4 +44,8 @@ jobs:
         working-directory: ./
     steps:
       - uses: actions/checkout@v2
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
       - run: docker-compose run --rm app bundle exec rubocop
