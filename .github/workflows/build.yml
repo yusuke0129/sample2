@@ -16,7 +16,7 @@ jobs:
         with:
           path: |
             ~/.docker
-          key: ${{ runner.os }}-docker-${{ hashFiles('**/*.lock') }}
+          key: ${{ runner.os }}-docker-test
 
       - run: echo "::set-output name=aaaa::bbbb"
 
