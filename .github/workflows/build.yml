@@ -11,6 +11,8 @@ jobs:
         working-directory: ./
     steps:
       - uses: actions/checkout@v3
+
+      - uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
           key: ${{ runner.os }}-buildx-${{ github.sha }}
