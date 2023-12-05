@@ -17,9 +17,7 @@ jobs:
       - uses: actions/cache@v3
         with:
           path: /tmp/.buildx-cache
-          key: ${{ runner.os }}-buildx-${{ github.sha }}
-          restore-keys: |
-            ${{ runner.os }}-buildx-
+          key: ${{ runner.os }}-buildx-{{ hashFiles('Gemfile.lock') }}{{ hashFiles('docker-compose.yml') }}
 
       - uses: docker/build-push-action@v2
         with:
@@ -42,6 +40,12 @@ jobs:
       - run: docker-compose -f docker-compose.yml up -d
 
       - run: docker-compose run --rm app bundle install
+
+      - run: docker-compose run --rm app rails db:create RAILS_ENV=test
+
+      - run: docker-compose run --rm app rails db:migrate RAILS_ENV=test
+      - run: docker-compose run --rm app bundle exec rspec
+
 
   # rspec:
   #   needs: build
