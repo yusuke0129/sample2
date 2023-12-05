@@ -21,8 +21,7 @@ jobs:
           key: ${{ runner.os }}-buildx-${{ github.sha }}
           restore-keys: |
             ${{ runner.os }}-buildx-
-      - name: Build and push
-        uses: docker/build-push-action@v3
+      - uses: docker/build-push-action@v3
         with:
           context: .
           push: false
@@ -30,8 +29,7 @@ jobs:
           tags: app:latest
           cache-from: type=local,src=/tmp/.buildx-cache
           cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max
-      - name: Move cache
-        run: |
+      -  run: |
           rm -rf /tmp/.buildx-cache
           mv /tmp/.buildx-cache-new /tmp/.buildx-cache   
       #   with:
