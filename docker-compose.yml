@@ -1,0 +1,36 @@
+version: "3"
+
+services:
+  db:
+    container_name: sample_db
+    image: postgres:11.4-alpine
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./back/tmp/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  back:
+    container_name: sample_back
+    build: ./back
+    volumes:
+      - ./back:/app
+      - bundle:/usr/local/bundle
+    environment:
+      - "DB_HOSTNAME=db"
+      - "DB_USERNAME=postgres"
+      - "DB_PASSWORD=postgres"
+      - "MAIL_USERNAME=yinomata.portfolio@gmail.com"
+      - "MAIL_PASSWORD=hazwfiltcuosizbb"
+    depends_on:
+      - db
+    ports:
+      - 3000:3000
+    command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
+    tty: true
+    stdin_open: true
+
+volumes:
+  bundle:
+    external: true
