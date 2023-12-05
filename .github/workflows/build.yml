@@ -23,9 +23,9 @@ jobs:
         with:
           context: .
           tags: app:latest
+          push: false
           load: true
-          cache-from: type=local,src=/tmp/.buildx-cache
-          cache-to: type=local,dest=/tmp/.buildx-cache-new,mode=max    
+          cache-from: type=gha 
       #   with:
       #     submodules: recursive
       # - uses: docker/setup-buildx-action@v2
