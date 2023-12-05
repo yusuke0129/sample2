@@ -17,6 +17,8 @@ jobs:
       - uses: docker/build-push-action@v4
         with:
           context: .
+          tags: app:latest
+          load: true
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
