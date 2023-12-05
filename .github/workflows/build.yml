@@ -11,14 +11,11 @@ jobs:
         working-directory: ./
     steps:
       - uses: actions/checkout@v2
-#test
-      - uses: actions/cache@v2
-        with:
-          path: |
-            ~/.docker
-          key: ${{ runner.os }}-docker-test
 
-      - run: echo "::set-output name=aaaa::bbbb"
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        with:
+          key: test
+        continue-on-error: true
 
       - run: docker-compose -f docker-compose.yml up -d
 
