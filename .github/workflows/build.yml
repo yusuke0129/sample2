@@ -17,6 +17,8 @@ jobs:
           key: test
         continue-on-error: true
 
+      - run: echo "::set-output name=aaaa::bbbb"
+
       - run: docker-compose -f docker-compose.yml up -d
 
       - run: docker-compose run --rm app bundle install
