@@ -38,6 +38,8 @@ jobs:
       #     cache-from: type=gha
 
       - run: docker-compose -f docker-compose.yml up -d
+
+      - run: echo "${{ toJson(github.workspace) }}"
       #   working-directory: ./
 
       # - run: docker-compose -f docker-compose.yml run --rm app bundle install
