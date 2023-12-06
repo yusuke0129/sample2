@@ -32,9 +32,9 @@ jobs:
       - uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/amd64
-          push: true
-          tags: |
-            aaaa:latest
+          # platforms: linux/amd64
+          # push: true
+          # tags: |
+          #   aaaa:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
