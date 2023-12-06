@@ -1,5 +1,5 @@
 GEM
-  remote: https://rubygems.org/# aaa
+  remote: https://rubygems.org/
   specs:
     actioncable (6.0.4.1)
       actionpack (= 6.0.4.1)
