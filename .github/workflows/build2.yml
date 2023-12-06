@@ -31,9 +31,9 @@ jobs:
       - uses: docker/build-push-action@v3
         with:
           context: .
-          platforms: linux/amd64
+          # キャッシュの恩恵のみを受ける場合は、push の必要なし
           push: false
-          # tags: |
-          #   aaaa:latest
+          tags: app:latest
+          # github cache を利用してキャッシュの設定をします
           cache-from: type=gha
           cache-to: type=gha,mode=max
