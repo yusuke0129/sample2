@@ -11,16 +11,19 @@ jobs:
     #   run:
     #     working-directory: ./
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - name: Cache Docker layers
-        uses: actions/cache@v2
+      # cache保存用にディレクトリを作っておく
+      - name: before cache
+        run: |
+          mkdir -p vendor/bundle
+
+      - name: Cache Bundler
+        uses: actions/cache@v3
         with:
-          path: /tmp/.buildx-cache
-          key: ${{ github.ref }}-${{ github.sha }}
-          restore-keys: |
-            ${{ github.ref }}-${{ github.sha }}
-            ${{ github.ref }}
+          path: vendor/bundle
+          key: bundle-${{ hashFiles('**/Gemfile.lock') }}
 
       # - uses: docker/setup-buildx-action@v2
       # - uses: docker/build-push-action@v3
@@ -33,20 +36,22 @@ jobs:
       #     # github cache を利用してキャッシュの設定をします
       #     cache-from: type=gha
 
-      # - run: docker-compose -f docker-compose.yml up -d
+      - run: docker-compose -f docker-compose.yml up -d
       #   working-directory: ./
 
-      # - run: docker-compose -f docker-compose.yml run --rm app bundle install
+      - run: docker-compose -f docker-compose.yml run --rm app bundle install
 
       # - run: docker-compose -f docker-compose.yml down
 
-      - uses: docker/setup-buildx-action@v2
-      - uses: docker/build-push-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v3
+        id: build-image
         with:
           context: .
+          # file: Dockerfile.production
           # platforms: linux/amd64
-          # push: true
-          # tags: |
-          #   aaaa:latest
+          push: true
+          tags: |
+            app:latest
           cache-from: type=gha
-          # cache-to: type=gha,mode=max
+          cache-to: type=gha,mode=max
