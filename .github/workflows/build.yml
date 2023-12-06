@@ -1,41 +1,68 @@
-name: build
+name: buildpush
 on:
   pull_request:
-# testaaaaaaaaaaaaazzzzaaaa
+    branches:
+      - develop
+# testaaaaa
 jobs:
   build:
-    name: build
     runs-on: ubuntu-latest
     defaults:
       run:
         working-directory: ./
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v3
 
-      - uses: satackey/action-docker-layer-caching@v0.0.11
+      # cache保存用にディレクトリを作っておく
+      - name: before cache
+        run: |
+          mkdir -p vendor/bundle
+
+      - name: Cache Bundler
+        uses: actions/cache@v3
         with:
-          key: docker-layer-caching-${{ hashFiles('Gemfile.lock') }}-${{ hashFiles('docker-compose.yml') }}
-        continue-on-error: true
+          path: vendor/bundle
+          key: bundle-${{ hashFiles('Gemfile.lock') }}
+
+      #     working-directory: ./
+
+      # - uses: docker/setup-buildx-action@v2
+      # - uses: docker/build-push-action@v3
+      #   with:
+      #     context: .
+      #     # キャッシュの恩恵のみを受ける場合は、push の必要なし
+      #     push: false
+      #     load: true
+      #     tags: app:latest
+      #     # github cache を利用してキャッシュの設定をします
+      #     cache-from: type=gha
 
       - run: docker-compose -f docker-compose.yml up -d
 
-      - run: docker-compose run --rm app bundle install
+      #   working-directory: ./
 
-  rspec:
-    needs: build
-    runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./
-    steps:
-      - uses: actions/checkout@v2
+      - run: docker-compose -f docker-compose.yml run --rm app bundle install
 
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        with:
-          key: test
-        continue-on-error: true
+      # - run: docker-compose run --rm app rails db:create RAILS_ENV=test
 
-      - run: docker-compose run --rm app rails db:create RAILS_ENV=test
+      # - run: docker-compose run --rm app rails db:migrate RAILS_ENV=test
+      # - run: docker-compose run --rm app bundle exec rspec
 
-      - run: docker-compose run --rm app rails db:migrate RAILS_ENV=test
-      - run: docker-compose run --rm app bundle exec rspec
+      # - run: docker-compose -f docker-compose.yml down
+
+      # - name: Set up Docker Buildx
+      #   uses: docker/setup-buildx-action@v2
+
+      # - name: Build and push
+      #   uses: docker/build-push-action@v3
+      #   id: build-image
+      #   with:
+      #     context: .
+      #     # file: Dockerfile.production
+      #     # platforms: linux/amd64
+      #     push: true
+      #     tags: |
+      #       app:latest
+      #     cache-from: type=gha
+      #     cache-to: type=gha,mode=max
