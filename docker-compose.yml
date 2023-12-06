@@ -1,0 +1,38 @@
+version: "3"
+
+services:
+  db:
+    container_name: sample_db
+    image: postgres:11.4-alpine
+    environment:
+      - TZ=Asia/Tokyo
+    volumes:
+      - ./back/tmp/db:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      # Dockerfileの内部で定義されているターゲット
+      target: laravel_application_mounted
+      args:
+          PHP_COVERAGE_DRIVER: pcov
+    image: localhost:5000/php-ci:${DOCKER_IMAGE_TAG_CI}
+    environment:
+      - "DB_HOSTNAME=db"
+      - "DB_USERNAME=postgres"
+      - "DB_PASSWORD=postgres"
+      - "MAIL_USERNAME=yinomata.portfolio@gmail.com"
+      - "MAIL_PASSWORD=hazwfiltcuosizbb"
+    depends_on:
+      - db
+    volumes:
+      - ../src:/project:cached
+      - ${HOME}/.composer:/composer:delegated
+    ports:
+      - 3000:3000
+    command: /bin/sh -c "rm -f /app/tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
+    tty: true
+    stdin_open: true
