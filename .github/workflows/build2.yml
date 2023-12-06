@@ -47,6 +47,22 @@ jobs:
       - run: docker-compose run --rm app rails db:migrate RAILS_ENV=test
       - run: docker-compose run --rm app bundle exec rspec
 
+      - name: Merge to develop branch
+      if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
+      run: git checkout develop && git merge --no-ff ${{ github.event.pull_request.head.ref }} && git push
+
+      - name: Run RSpec on develop branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: bundle exec rspec
+  
+      - name: Merge to release branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: git checkout release && git merge --no-ff develop && git push
+  
+      - name: Run RSpec on release branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release'
+        run: bundle exec rspec
+
       # - run: docker-compose -f docker-compose.yml down
 
       # - name: Set up Docker Buildx
