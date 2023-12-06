@@ -14,6 +14,9 @@ RSpec.describe 'SampleApis', type: :request do
       it 'return all contacts' do
         is_expected. to eq 10
       end
+      it 'fail' do
+        is_expected. to eq 1
+      end
     end
   end
 end
