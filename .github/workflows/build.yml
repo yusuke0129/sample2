@@ -4,7 +4,7 @@ env:
     TERM: xterm-256color
     COMPOSE_FILE: docker-compose.yml
 name: CI
-# testaaaaaaaaaaaaazzzzaaaaa
+# testaaaaaaaaaaaaazzzzaaaaaaaaaa
 jobs:
   docker-build:
       runs-on: ubuntu-latest
