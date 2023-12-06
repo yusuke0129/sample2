@@ -36,4 +36,4 @@ jobs:
           tags: app:latest
           # github cache を利用してキャッシュの設定をします
           cache-from: type=gha
-          cache-to: type=gha,mode=max
+          # cache-to: type=gha,mode=max
