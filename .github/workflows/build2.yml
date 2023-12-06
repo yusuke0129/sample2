@@ -42,11 +42,13 @@ jobs:
 
       - run: docker-compose -f docker-compose.yml up -d
 
+      - run: ocker-compose -f docker-compose.yml down
+
       - run: echo "${{ toJson(github.workspace) }}"
       - run: pwd
       #   working-directory: ./
 
-      # - run: docker-compose -f docker-compose.yml run --rm app bundle install
+      - run: docker-compose -f docker-compose.yml run --rm app bundle install
 
       # - run: docker-compose run --rm app rails db:create RAILS_ENV=test
 
