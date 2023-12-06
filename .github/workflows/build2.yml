@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: vendor/bundle
-          key: bundle-test
+          key: bundle-${{ hashFiles('**/Gemfile.lock') }}
 
       # - uses: docker/setup-buildx-action@v2
       # - uses: docker/build-push-action@v3
