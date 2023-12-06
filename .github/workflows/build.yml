@@ -56,6 +56,19 @@ jobs:
                       --set='*.cache-to=type=local,dest=/tmp/.buildx-cache' \
                       --push \
                       -f "${COMPOSE_FILE}"
+
+       
+          - name: bundle install
+            run: docker-compose run --rm app bundle install
+    
+          - name: db:create
+            run: docker-compose run --rm app rails db:create RAILS_ENV=test
+
+          - name: db:migrate
+            run: docker-compose run --rm app rails db:migrate RAILS_ENV=test
+            
+          - name: rspec
+             run: docker-compose run --rm app bundle exec rspec
   # build:
   #   name: build
   #   runs-on: ubuntu-latest
