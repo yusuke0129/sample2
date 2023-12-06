@@ -6,20 +6,35 @@ jobs:
   build:
     name: build
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./
+    # defaults:
+    #   run:
+    #     working-directory: ./
     steps:
       - uses: actions/checkout@v2
 
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        with:
-          key: docker-layer-caching-${{ hashFiles('Gemfile.lock') }}-${{ hashFiles('docker-compose.yml') }}
-        continue-on-error: true
+      # - uses: satackey/action-docker-layer-caching@v0.0.11
+      #   with:
+      #     key: docker-layer-caching-${{ hashFiles('Gemfile.lock') }}-${{ hashFiles('docker-compose.yml') }}
+      #   continue-on-error: true
 
       - run: docker-compose -f docker-compose.yml up -d
 
       - run: docker-compose run --rm app bundle install
+
+      - name: Merge to develop branch
+        if: github.event_name == 'pull_request'
+        run: git checkout develop && git merge --no-ff ${{ github.event.pull_request.head.ref }}
+
+      - name: Run RSpec on develop branch
+        run: bundle exec rspec
+
+      - name: Merge to release branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: git checkout release && git merge --no-ff develop && git push
+
+      - name: Run RSpec on release branch
+        if: github.event_name == 'push' && github.ref == 'refs/heads/release'
+        run: bundle exec rspec
 
   rspec:
     needs: build
