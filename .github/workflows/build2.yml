@@ -1,0 +1,21 @@
+name: buildpush
+on:
+  push:
+    branches:
+      - develop
+# testaaaaaaaaaa
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: satackey/action-docker-layer-caching@v0.0.11
+        continue-on-error: true
+
+      - run: docker-compose -f docker-compose.yml up -d
+
+      - run: docker-compose run --rm app bundle install
