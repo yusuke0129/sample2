@@ -1,7 +1,7 @@
 name: build
 on:
-  push:
-# testaaaaaaaaaaaaa
+  pull_request:
+# testaaaaaaaaaaaaazzzzaaaa
 jobs:
   build:
     name: build
