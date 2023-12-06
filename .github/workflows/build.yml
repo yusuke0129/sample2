@@ -1,7 +1,7 @@
 name: build
 on:
-  pull:
-# testaaa
+  pull_request:
+# testaaaaaaaaaa
 jobs:
   build:
     name: build
