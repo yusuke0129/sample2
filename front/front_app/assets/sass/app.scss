@@ -1,0 +1,10 @@
+@import '../variables';
+
+@font-face {
+    font-family: 'smartfont';
+    src: url('../font/smartfont.otf') format("opentype");
+  }
+
+.samrt-font {
+    font-family: 'smartfont';
+}
