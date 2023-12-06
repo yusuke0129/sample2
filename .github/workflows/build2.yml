@@ -25,7 +25,15 @@ jobs:
           tags: app:latest
           # github cache を利用してキャッシュの設定をします
           cache-from: type=gha
-
+      - uses: docker/build-push-action@v3
+        with:
+          context: .
+          # キャッシュの恩恵のみを受ける場合は、push の必要なし
+          push: true
+          load: true
+          tags: app:latest
+          # github cache を利用してキャッシュの設定をします
+          cache-from: type=gha
       - run: docker-compose -f docker-compose.yml up -d
 
       - run: docker-compose run --rm app bundle install
