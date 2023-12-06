@@ -1,6 +1,6 @@
 name: build
 on:
-  push:
+  pull_request:
 # test
 jobs:
   build:
@@ -12,12 +12,12 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - uses: satackey/action-docker-layer-caching@v0.0.11
-        with:
-          key: test
-        continue-on-error: true
+      # - uses: satackey/action-docker-layer-caching@v0.0.11
+      #   with:
+      #     key: test
+      #   continue-on-error: true
 
-      - run: echo "::set-output name=aaaa::bbbb"
+      # - run: echo "::set-output name=aaaa::bbbb"
 
       - run: docker-compose -f docker-compose.yml up -d
 
