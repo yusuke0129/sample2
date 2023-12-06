@@ -23,7 +23,7 @@ jobs:
         uses: actions/cache@v3
         with:
           path: vendor/bundle
-          key: 1bundle-${{ hashFiles('Gemfile.lock') }}
+          key: bundle-${{ hashFiles('Gemfile.lock') }}
 
       #     working-directory: ./
 
