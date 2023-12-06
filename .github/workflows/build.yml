@@ -1,6 +1,9 @@
-name: build
 on:
   pull_request:
+env:
+    TERM: xterm-256color
+    COMPOSE_FILE: docker-compose.yml
+name: CI
 # testaaaaaaaaaaaaazzzzaaaaa
 jobs:
   docker-build:
