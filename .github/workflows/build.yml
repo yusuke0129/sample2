@@ -22,11 +22,10 @@ jobs:
       - run: docker-compose run --rm app bundle install
 
       - name: Merge to develop branch
-        if: github.event_name == 'pull_request' && github.event.action == 'closed' && github.event.pull_request.merged == true
-        run: git checkout develop && git merge --no-ff ${{ github.event.pull_request.head.ref }} && git push
+        if: github.event_name == 'pull_request'
+        run: git checkout develop && git merge --no-ff ${{ github.event.pull_request.head.ref }}
 
       - name: Run RSpec on develop branch
-        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: bundle exec rspec
 
       - name: Merge to release branch
