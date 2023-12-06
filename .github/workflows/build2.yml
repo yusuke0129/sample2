@@ -17,7 +17,7 @@ jobs:
         continue-on-error: true
         with:
           key: docker-layer-caching-${{ hashFiles('Gemfile.lock') }}-${{ hashFiles('docker-compose.yml') }}-{hash}
-        
+          restore-keys: docker-layer-caching-${{ hashFiles('Gemfile.lock') }}-${{ hashFiles('docker-compose.yml') }}-{hash}
 
       - run: docker-compose -f docker-compose.yml up -d
 
