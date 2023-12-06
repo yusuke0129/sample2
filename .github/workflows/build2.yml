@@ -37,7 +37,7 @@ jobs:
       #     # github cache を利用してキャッシュの設定をします
       #     cache-from: type=gha
 
-      # - run: docker-compose -f docker-compose.yml up -d
+      - run: docker-compose -f docker-compose.yml up -d
       #   working-directory: ./
 
       # - run: docker-compose -f docker-compose.yml run --rm app bundle install
