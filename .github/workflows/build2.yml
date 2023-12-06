@@ -32,8 +32,8 @@ jobs:
         with:
           context: .
           platforms: linux/amd64
-          push: true
-          tags: |
-            aaaa:latest
+          # push: true
+          # tags: |
+          #   aaaa:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
