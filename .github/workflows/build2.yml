@@ -13,17 +13,6 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      # - uses: docker/setup-buildx-action@v2
-      # - uses: docker/build-push-action@v3
-      #   with:
-      #     context: .
-      #     # キャッシュの恩恵のみを受ける場合は、push の必要なし
-      #     push: false
-      #     load: true
-      #     tags: app:latest
-      #     # github cache を利用してキャッシュの設定をします
-      #     cache-from: type=gha
-
       - run: docker-compose -f docker-compose.yml up -d
 
       - run: docker-compose run --rm app bundle install
@@ -32,9 +21,24 @@ jobs:
       - uses: docker/build-push-action@v3
         with:
           context: .
-          # platforms: linux/amd64
-          # push: true
-          # tags: |
-          #   aaaa:latest
+          # キャッシュの恩恵のみを受ける場合は、push の必要なし
+          push: false
+          load: true
+          tags: app:latest
+          # github cache を利用してキャッシュの設定をします
           cache-from: type=gha
-          # cache-to: type=gha,mode=max
+
+      # - run: docker-compose -f docker-compose.yml up -d
+
+      # - run: docker-compose run --rm app bundle install
+
+      # - uses: docker/setup-buildx-action@v2
+      # - uses: docker/build-push-action@v3
+      #   with:
+      #     context: .
+      #     # platforms: linux/amd64
+      #     # push: true
+      #     # tags: |
+      #     #   aaaa:latest
+      #     cache-from: type=gha
+      #     # cache-to: type=gha,mode=max
