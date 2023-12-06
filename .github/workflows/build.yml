@@ -14,7 +14,6 @@ jobs:
 
       - uses: satackey/action-docker-layer-caching@v0.0.11
         key: docker-layer-caching-${{ hashFiles('Gemfile.lock') }}-${{ hashFiles('docker-compose.yml') }}
-
         continue-on-error: true
 
       - run: docker-compose -f docker-compose.yml up -d
